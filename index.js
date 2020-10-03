@@ -19,7 +19,7 @@ console.log(efectivoDebito)
 tieneDescuento.onclick = () => {
     obtenerDescuento(precio)
     descuentoEnPantalla()
-    mostrarTotal(precio)
+    descuentoTotal(precio)
 }
 
 tieneRecargo.onclick = () => {
@@ -42,7 +42,6 @@ efectivoDebito.onclick = () => {
 //Hace las operaciones y saca el resultado
 const obtenerDescuento = (precio) => {
     let operacionDescuento = (precio * 0.10)
-    console.log(operacionDescuento)
     return operacionDescuento
 }
 
@@ -65,11 +64,37 @@ const obtenerEfectivoDebito = () => {
 
 //OBTENEMOS EL TOTAL
 
-const mostrarTotal = (precio) => {
-
-    total.textContent= precio
-    console.log("oliwis")
+const descuentoTotal = (precio) => {
+    let descuento = 0
+    if (tieneDescuento.checked) {
+        console.log (operacionDescuento)
+        precio = precio - descuento
+        console.log(precio, descuento)
+    }
 }
+
+const mostrarTotal = (precio) => {
+    let descuento = 0
+    let recargo = 0
+    let envio = 0
+
+
+
+    if (tieneRecargo.checked) {
+        recargo = obtenerRecargo(precio)
+        precio = precio+recargo
+        console.log(recargo)
+    }
+
+    if (tieneEnvio.checked) {
+        envio = obtenerGastoDeEnvio()
+        precio= envio + recargo
+        console.log(envio)
+    }
+
+    return total.textContent= precio
+}
+
 
 //cambiamos el descuento en base a lo que de OBTENERDESCUENTO
 const descuentoEnPantalla = () => {
