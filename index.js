@@ -13,24 +13,58 @@ let total = document.querySelector("#total")
 constanteSubtotal.textContent = "600"
 let precio = 600
 
-console.log(efectivoDebito)
+console.log(recargo)
 
 //Aquí hacemos click
+// let operacionDescuento
+
+
+const descuentoEnPantalla = () => {
+    if (tieneDescuento.checked) {
+        operacionDescuento = (precio * 0.10)
+        descuento.textContent = operacionDescuento
+    }
+    else {
+        operacionDescuento = 0
+        descuento.textContent = "0"
+    }
+    return operacionDescuento
+}
+
+
+// //Aquí hacemos click
 tieneDescuento.onclick = () => {
-    obtenerDescuento(precio)
     descuentoEnPantalla()
-    descuentoTotal(precio)
+    mostrarTotal()
 }
 
+let operacionRecargo
+
+const recargoEnPantalla = () => {
+    if (tieneRecargo.checked) {
+        operacionRecargo = (precio * 0.10)
+        recargo.textContent = operacionRecargo
+    }
+    else {
+        operacionRecargo = 0
+        recargo.textContent = operacionRecargo
+    }
+
+    return operacionRecargo
+}
 tieneRecargo.onclick = () => {
-    obtenerRecargo(precio)
     recargoEnPantalla()
-
+    mostrarTotal()
 }
-
-tieneEnvio.onclick = () => {
-    obtenerGastoDeEnvio()
-    envioEnPantalla()
+let operacionEfectivoDebito
+const efectivoDebitoEnPantalla = () => {
+    if (efectivoDebito.checked) {
+        recargo.textContent = obtenerEfectivoDebito(precio)
+    }
+    else {
+        operacionEfectivoDebito= 0
+        recargo.textContent = operacionEfectivoDebito
+    }
 }
 
 efectivoDebito.onclick = () => {
@@ -38,110 +72,47 @@ efectivoDebito.onclick = () => {
     efectivoDebitoEnPantalla()
 }
 
-//Al hacer click tiene que pasar esto:
-//Hace las operaciones y saca el resultado
-const obtenerDescuento = (precio) => {
-    let operacionDescuento = (precio * 0.10)
-    return operacionDescuento
+let operacionEfectivoDebito
+const obtenerEfectivoDebito = () => {
+    if (efectivoDebito.checked) {
+        operacionEfectivoDebito = 0
+    }
+    return operacionEfectivoDebito
 }
 
-const obtenerRecargo = (precio) => {
-    let operacionRecargo = (precio * 0.10)
-    return operacionRecargo
+tieneEnvio.onclick = () => {
+    envioEnPantalla()
+    mostrarTotal()
 }
 
-const obtenerGastoDeEnvio = () => {
-    let operacionGastoDeEnvio = 50
+let operacionGastoDeEnvio
+const envioEnPantalla = () => {
+    if (tieneEnvio.checked) {
+        operacionGastoDeEnvio = 50
+        envio.textContent = operacionGastoDeEnvio
+    }
+    else {
+        operacionGastoDeEnvio = 0
+        envio.textContent = operacionGastoDeEnvio
+    }
     return operacionGastoDeEnvio
 }
 
-const obtenerEfectivoDebito = () => {
-    if (efectivoDebito.checked) {
-        let operacionEfectivoDebito = 0
-        return operacionEfectivoDebito
-    }
-}
+//Al hacer click tiene que pasar esto:
+//Hace las operaciones y saca el resultado
 
 //OBTENEMOS EL TOTAL
 
-const descuentoTotal = (precio) => {
-    let descuento = 0
-    if (tieneDescuento.checked) {
-        console.log (operacionDescuento)
-        precio = precio - descuento
-        console.log(precio, descuento)
-    }
-}
-
-const mostrarTotal = (precio) => {
-    let descuento = 0
-    let recargo = 0
-    let envio = 0
-
-
-
-    if (tieneRecargo.checked) {
-        recargo = obtenerRecargo(precio)
-        precio = precio+recargo
-        console.log(recargo)
-    }
-
-    if (tieneEnvio.checked) {
-        envio = obtenerGastoDeEnvio()
-        precio= envio + recargo
-        console.log(envio)
-    }
-
-    return total.textContent= precio
+const mostrarTotal = () => {
+    let precioTotal= precio + envioEnPantalla() + obtenerEfectivoDebito() + recargoEnPantalla() + descuentoEnPantalla()
+    total.textContent = precioTotal
 }
 
 
 //cambiamos el descuento en base a lo que de OBTENERDESCUENTO
-const descuentoEnPantalla = () => {
-    if (tieneDescuento.checked) {
-        descuento.textContent = obtenerDescuento(precio)
-    }
-    else {
-        descuento.textContent = "0"
-    }
-}
-
-const recargoEnPantalla = () => {
-    if (tieneRecargo.checked) {
-        recargo.textContent = obtenerRecargo(precio)
-    }
-    else {
-        recargo.textContent = "0"
-    }
-}
-
-const envioEnPantalla = () => {
-    if (tieneEnvio.checked) {
-        envio.textContent = obtenerGastoDeEnvio(precio)
-    }
-    else {
-        envio.textContent = "0"
-    }
-}
-
-const efectivoDebitoEnPantalla = () => {
-    if (efectivoDebito.checked) {
-        recargo.textContent = obtenerEfectivoDebito(precio)
-    }
-    else {
-        recargo.textContent = "0"
-    }
-}
 
 
 
 
-// const obtenerTotal = (precio) => {
-//     if (tieneDescuento) {
-//         return tieneDescuento(precio) - precio
-//     }
-//     console.log(obtenerTotal)
-// }
 
-// console.log(obtenerGastoDeEnvio(100))
-// console.log(obtenerRecargo(100))
+
